@@ -12,23 +12,23 @@ pipeline {
                 }
             }
         }
-        stage ('Deploy to Staging'){
+        stage ('Deploy to Dev'){
             steps {
-                build job: 'Deploy-to-staging'
+                build job: 'deploy-to-dev'
             }
         }
 
-        stage ('Deploy to Production'){
+        stage ('Deploy to QA'){
             steps{
                 timeout(time:5, unit:'DAYS'){
-                    input message:'Approve PRODUCTION Deployment?'
+                    input message:'Approve QA Deployment?'
                 }
 
-                build job: 'deploy-to-production'
+                build job: 'deploy-to-qa'
             }
             post {
                 success {
-                    echo 'Code deployed to Production.'
+                    echo 'Code deployed to QA ENV.'
                 }
 
                 failure {
