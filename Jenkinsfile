@@ -12,31 +12,5 @@ pipeline {
                 }
             }
         }
-        stage ('Deploy to Dev'){
-            steps {
-                build job: 'deploy-to-dev'
-            }
-        }
-
-        stage ('Deploy to QA'){
-            steps{
-                timeout(time:5, unit:'DAYS'){
-                    input message:'Approve QA Deployment?'
-                }
-
-                build job: 'deploy-to-qa'
-            }
-            post {
-                success {
-                    echo 'Code deployed to QA ENV.'
-                }
-
-                failure {
-                    echo ' Deployment failed.'
-                }
-            }
-        }
-
-
     }
 }
