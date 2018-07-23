@@ -17,5 +17,10 @@ pipeline {
                 build job: 'deploy-to-dev'
             }
         }
+	stage ('Deploy to QA'){
+            steps {
+                build job: 'deploy-to-qa'
+            }
+        }
     }
 }
