@@ -18,10 +18,9 @@ pipeline {
             }
         }
 	stage ('Deploy to QA'){
-            steps {
-                steps{
-                   timeout(time:5, unit:'DAYS'){
-                   input message:'Approve QA Deployment?'
+            steps{
+                timeout(time:5, unit:'DAYS'){
+                input message:'Approve QA Deployment?'
                 }
 		
 		build job: 'deploy-to-qa'
