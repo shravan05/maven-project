@@ -25,6 +25,11 @@ pipeline {
 		
 		build job: 'deploy-to-qa'
             }
+            post {
+                success {
+                    echo 'Code deployed to QA ENV.'
+                }
+            }
         }
     }
 }
