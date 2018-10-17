@@ -3,7 +3,7 @@ pipeline {
     stages{
         stage('Build'){
             agent {
-       	      label 'Node1'
+       	      label 'Master'
      	    }
 	    steps {
                 sh 'mvn clean package'
@@ -17,22 +17,22 @@ pipeline {
         }
 	stage ('Deploy to Dev'){
             agent {
-              label 'Node1'
+              label 'Master'
             }
 	    steps {
-                build job: 'deploy-to-dev'
+                build job: 'deploy-to-tomcatDev'
             }
         }
 	stage ('Deploy to QA'){
             agent {
-              label 'Node1'
+              label 'Master'
             }
 	    steps{
                 timeout(time:5, unit:'DAYS'){
                 input message:'Approve QA Deployment?'
                 }
 		
-		build job: 'deploy-to-qa'
+		build job: 'deploy-to-tomcatQA'
             }
 	    post {
                 success {
@@ -46,14 +46,14 @@ pipeline {
         }
 	stage ('Deploy to PROD'){
             agent {
-              label 'Node1'
+              label 'Master'
             }
 	    steps{
                 timeout(time:5, unit:'DAYS'){
                 input message:'Approve PROD Deployment?'
                 }
 
-                build job: 'deploy-to-prod'
+                build job: 'deploy-to-tomcatProd'
             }
             post {
                 success {
